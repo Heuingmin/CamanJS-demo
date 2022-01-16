@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+
+<head>
+    <title>
+        うんっ！　きっと伝わるよっ！ - emufans
+    </title>
+    <style>
+        		label {
+			font-size: 0.9em;
+            padding:0 .5em;
+            margin:5px;
+            min-width: 80px;
+			position: relative;
+            display:inline-block;
+		}
+
+        body {
+            background-color: #f5f5f5;
+            color: #111111;
+            padding: 0%;
+            margin: 0%;
+            display: block;
+        }
+
+        .top {
+            background-color: #FFFFFF;
+            height: 10em;
+            color: #666666;
+
+        }
+
+        .picture-container {
+            background-color: #fcfcfc;
+            margin: 3em;
+            color: inherit;
+            display: flex;
+            -webkit-box-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            justify-content: center;
+            min-width: 200px;
+            cursor: zoom-in;
+            min-height: 320px;
+            border-radius: 5em;
+        }
+
+        .inform-column {
+            -webkit-text-size-adjust: 100%;
+            color: rgb(31, 31, 31);
+            background-color: #FFFFFF;
+            -webkit-font-smoothing: antialiased;
+            font-kerning: normal;
+            font-size: 14px;
+            line-height: calc(1em + 8px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .inform-wrapper {
+            margin-left: 5em;
+            -webkit-text-size-adjust: 100%;
+            color: rgb(31, 31, 31);
+            -webkit-font-smoothing: antialiased;
+            font-kerning: normal;
+            font-size: 14px;
+            line-height: calc(1em + 8px);
+            width: 600px;
+        }
+
+        .top-logo {
+            height: 50px;
+            width: 50px;
+            margin-left: 4em;
+            display: inline-block;
+        }
+
+        .top-logo img {
+            height: 50px;
+            width: 50px;
+            position: absolute;
+        }
+
+        .top-inform {
+            width: max-content;
+            font-weight: 600;
+            font-size: xx-large;
+            display: inline-block;
+            margin-left: 1.8em;
+        }
+
+        
+#Filter-container,
+#resize-container,
+#crop-container,
+#rotate-container,
+#Apply-container{
+  width:100vw;
+  padding:20px;
+  position: relative;
+}
+
+#PresetFilters{
+  padding:20px;
+  width:fit-content;
+  min-width: 70vw;
+  max-width: 85vw;
+  display: inline-block;
+}
+#resize-container input,
+#crop-container input,
+#rotate-container input
+{
+  width: 16vw;
+  max-width: 200px;
+  min-width:70px;
+  display:inline-block;
+}
+.Filter {
+  float: left;
+  width: 325px;
+  padding: .3em 0;
+}
+.Filter > div {
+  padding: 5px 10px;
+}
+.FilterName {
+  float: left;
+  width:85px;
+  text-align: center;
+  color:#EEEEEE;
+  padding:5px 10px;
+  border: none;
+      border-radius: 18px;
+    background-color: #368ad2;
+
+}
+.FilterName p {
+  margin: 0;
+}
+#Filter-container .Filter .FilterSetting {
+  float: right;
+  margin-top:-5px;
+  position: relative;
+
+}
+#Filter-container .Filter .FilterSetting input[type="range"] {
+  -webkit-appearance: none !important;
+  width: 150px;
+  background-color: #434341;
+  height: 1px;
+  vertical-align: 1px;
+}
+#Filter-container .Filter .FilterSetting input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  height: 12px;
+  width: 15px;
+  background-color: #368ad2;
+  cursor: pointer;
+}
+#Filter-container .Filter .FilterSetting .FilterValue {
+  width: 30px;
+  display: inline-block;
+}
+#PresetFilters a {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-transition: background-color 0.3s ease-out;
+  -moz-transition: background-color 0.3s ease-out;
+  transition: background-color 0.3s ease-out;
+  background-color: #368ad2;
+  display: inline-block;
+  text-align: center;
+  padding: 8px 10px;
+  color: #f8f8f2;
+  margin: 5px;
+  border: none;
+  font-size: 13px;
+  width: 120px;
+  cursor: pointer;
+  position: relative;
+}
+#PresetFilters a:hover {
+  background-color: #4b96d7;
+}
+#PresetFilters a:active {
+  -webkit-box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+#PresetFilters a.Active {
+  background-color: #e69751;
+}
+#Apply-container button{
+  padding:.5em 1em;
+  font-size: 1.3em;
+  border: none;
+  border-radius: .6em;
+
+}
+#Apply-container #reset{
+  color:#EEEEEE;
+  background-color: red;
+}
+
+    </style>
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/camanjs/4.1.2/caman.full.min.js"></script> -->
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>  
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+  
+      <script type="text/javascript" src="js/caman.full.min.js"></script>
+    <script type="text/javascript" src="js/camanFiltering.js"></script>
+     
+      <script type="text/javascript">
+        Caman.DEBUG = true
+      </script>
+</head>
+
+<body>
+    <div class="top">
+        <div class="top-logo">
+            <img src="/images/stamp0161.webp">
+            <div class="top-inform">えむファンす！</div>
+        </div>
+    </div>
+    <div class="picture-container">
+            <img id="example" 
+            data-camanwidth="1200" data-camanheight="auto" src="/images/14-06-b copy.png" >
+        <!-- <canvas id="example" style="background: url(/images/14-06-b.png);"width="2048" height="1261"></canvas> -->
+    </div>
+    <div id="resize-container">
+        <div class="FilterName">
+            <p>尺寸缩放</p>
+        </div>
+        <div style="column-count: 2;min-width:45vw;max-width:75vw;padding:0 .5em;">
+        <div><label> 宽度 </label><input id="resize-w" class="in"></div>
+        <div><label> 高度 </label><input id="resize-h" class="in"></div>
+        </div>
+    </div>
+
+    <div id="crop-container">
+        <div class="FilterName">
+            <p>尺寸裁切</p>
+        </div>
+        <div style="column-count: 2;min-width:45vw;max-width:75vw;padding:0 .5em;">
+        <div><label> 起点横坐标 </label><input id="crop-x" class="in"></div>
+        <div><label> 起点纵坐标 </label><input id="crop-y" class="in"></div>
+        <div><label> 宽度 </label><input id="crop-w" class="in"></div>
+        <div><label> 高度 </label><input id="crop-h" class="in"></div>
+        </div>
+    </div>
+
+    <div id="rotate-container">
+        <div class="FilterName">
+            <p>旋转</p>
+        </div>
+        <div style="column-count: 2;min-width:45vw;max-width:75vw;padding:0 .5em;">
+        <div><label> 角度 </label><input id="angle" class="in"></div>
+        <div><button style="margin:5px;"id="apply">提交所有更改</button>
+        </div>
+    </div>
+    </div>
+
+    <div id="Filter-container">
+
+        <div class="Filter">
+            <div class="FilterName">
+              <p>亮度</p>
+            </div>
+      
+            <div class="FilterSetting">
+              <input
+                type="range" 
+                min="-100"
+                max="100"
+                step="1"
+                value="0"
+                data-filter="brightness"
+              >
+              <span class="FilterValue">0</span>
+            </div>
+          </div>
+        
+          <div class="Filter">
+            <div class="FilterName">
+              <p>对比度</p>
+            </div>
+      
+            <div class="FilterSetting">
+              <input
+                type="range" 
+                min="-100"
+                max="100"
+                step="1"
+                value="0"
+                data-filter="contrast"
+              >
+              <span class="FilterValue">0</span>
+            </div>
+          </div>
+        
+          <div class="Filter">
+            <div class="FilterName">
+              <p>饱和度</p>
+            </div>
+      
+            <div class="FilterSetting">
+              <input
+                type="range" 
+                min="-100"
+                max="100"
+                step="1"
+                value="0"
+                data-filter="saturation"
+              >
+              <span class="FilterValue">0</span>
+            </div>
+          </div>
+        
+          <div class="Filter">
+            <div class="FilterName">
+              <p>自然饱和度</p>
+            </div>
+      
+            <div class="FilterSetting">
+              <input
+                type="range" 
+                min="-100"
+                max="100"
+                step="1"
+                value="0"
+                data-filter="vibrance"
+              >
+              <span class="FilterValue">0</span>
+            </div>
+          </div>
+        
+          <div class="Filter">
+            <div class="FilterName">
+              <p>曝光</p>
+            </div>
+      
+            <div class="FilterSetting">
+              <input
+                type="range" 
+                min="-100"
+                max="100"
+                step="1"
+                value="0"
+                data-filter="exposure"
+              >
+              <span class="FilterValue">0</span>
+            </div>
+          </div>
+        
+          <div class="Filter">
+            <div class="FilterName">
+              <p>色像</p>
+            </div>
+      
+            <div class="FilterSetting">
+              <input
+                type="range" 
+                min="0"
+                max="100"
+                step="1"
+                value="0"
+                data-filter="hue"
+              >
+              <span class="FilterValue">0</span>
+            </div>
+          </div>
+        
+          <div class="Filter">
+            <div class="FilterName">
+              <p>褐度</p>
+            </div>
+      
+            <div class="FilterSetting">
+              <input
+                type="range" 
+                min="0"
+                max="100"
+                step="1"
+                value="0"
+                data-filter="sepia"
+              >
+              <span class="FilterValue">0</span>
+            </div>
+          </div>
+        
+          <div class="Filter">
+            <div class="FilterName">
+              <p>伽玛值</p>
+            </div>
+      
+            <div class="FilterSetting">
+              <input
+                type="range" 
+                min="0"
+                max="10"
+                step="0.1"
+                value="0"
+                data-filter="gamma"
+              >
+              <span class="FilterValue">0</span>
+            </div>
+          </div>
+        
+          <div class="Filter">
+            <div class="FilterName">
+              <p>噪声</p>
+            </div>
+      
+            <div class="FilterSetting">
+              <input
+                type="range" 
+                min="0"
+                max="100"
+                step="1"
+                value="0"
+                data-filter="noise"
+              >
+              <span class="FilterValue">0</span>
+            </div>
+          </div>
+        
+          <div class="Filter">
+            <div class="FilterName">
+              <p>色偏</p>
+            </div>
+      
+            <div class="FilterSetting">
+              <input
+                type="range" 
+                min="0"
+                max="100"
+                step="1"
+                value="0"
+                data-filter="clip"
+              >
+              <span class="FilterValue">0</span>
+            </div>
+          </div>
+        
+          <div class="Filter">
+            <div class="FilterName">
+              <p>锐度</p>
+            </div>
+      
+            <div class="FilterSetting">
+              <input
+                type="range" 
+                min="0"
+                max="100"
+                step="1"
+                value="0"
+                data-filter="sharpen"
+              >
+              <span class="FilterValue">0</span>
+            </div>
+          </div>
+        
+          <div class="Filter">
+            <div class="FilterName">
+              <p>堆栈模糊</p>
+            </div>
+      
+            <div class="FilterSetting">
+              <input
+                type="range" 
+                min="0"
+                max="20"
+                step="1"
+                value="0"
+                data-filter="stackBlur"
+              >
+              <span class="FilterValue">0</span>
+            </div>
+          </div>
+          
+    </div>
+    
+  <div id="PresetFilters">
+  
+    <a data-preset="vintage">Vintage</a>
+  
+    <a data-preset="lomo">Lomo</a>
+  
+    <a data-preset="clarity">Clarity</a>
+  
+    <a data-preset="sinCity">Sin City</a>
+  
+    <a data-preset="sunrise">Sunrise</a>
+  
+    <a data-preset="crossProcess">Cross Process</a>
+  
+    <a data-preset="orangePeel">Orange Peel</a>
+  
+    <a data-preset="love">Love</a>
+  
+    <a data-preset="grungy">Grungy</a>
+  
+    <a data-preset="jarques">Jarques</a>
+  
+    <a data-preset="pinhole">Pinhole</a>
+  
+    <a data-preset="oldBoot">Old Boot</a>
+  
+    <a data-preset="glowingSun">Glowing Sun</a>
+  
+    <a data-preset="hazyDays">Hazy Days</a>
+  
+    <a data-preset="herMajesty">Her Majesty</a>
+  
+    <a data-preset="nostalgia">Nostalgia</a>
+  
+    <a data-preset="hemingway">Hemingway</a>
+  
+    <a data-preset="concentrate">Concentrate</a>
+
+    <a data-preset="blackAndWhite">Black and White</a>
+
+    <a data-preset="bright">Bright</a>
+  
+  </div>
+  <div id="Apply-container">
+    <button style="margin:5px;"id="reset">重置所有更改</button>
+    <button style="margin:5px;"id="save">保存图片</button>
+
+  </div>
+</body>
